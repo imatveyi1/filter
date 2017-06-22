@@ -19,10 +19,9 @@ import java.util.List;
  */
 public class ContactsData implements ContactsDao {
 
-//    private static final Class clas = Class.forName("org.postgresql.Driver");
-    private static final String URL = System.getProperty("url");// "jdbc:postgresql://localhost:5432/store";
-    private static final String LOGIN = System.getProperty("login");//"postgres";
-    private static final String PASSWORD = System.getProperty("password");//"karolina123";
+    private static final String URL = System.getProperty("url");
+    private static final String LOGIN = System.getProperty("login");
+    private static final String PASSWORD = System.getProperty("password");
     
     private static final String QUERY = "select id, name from contacts";
     
