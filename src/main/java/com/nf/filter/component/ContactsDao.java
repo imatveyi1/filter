@@ -13,6 +13,6 @@ import java.util.List;
  */
 public interface ContactsDao {
     
-    public List<String> getContacts(String regular);
+    public List<Contact> getContacts(String regular);
     
 }

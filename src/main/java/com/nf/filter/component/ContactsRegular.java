@@ -23,15 +23,15 @@ public class ContactsRegular implements ContactsDao {
     }
     
     @Override
-    public List<String> getContacts(String regular) {
-        List<String> contacts = cc.getContacts(regular);
+    public List<Contact> getContacts(String regular) {
+        List<Contact> contacts = cc.getContacts(regular);
         return splitList(contacts, regular);
         
     }
     
-    private List<String> splitList(List<String> contacts, String regular){
+    private List<Contact> splitList(List<Contact> contacts, String regular){
         
-        List<List<String>> list = new ArrayList();
+        List<List<Contact>> list = new ArrayList();
         
         int step = contacts.size()<1000 ? contacts.size() : contacts.size()/10;
         for(int i=0; i<contacts.size(); i+=step){
@@ -41,13 +41,13 @@ public class ContactsRegular implements ContactsDao {
         return list.parallelStream().map(cont -> regexList(cont, regular)).reduce((c1,c2) -> addAll(c1,c2)).orElse(Collections.EMPTY_LIST);
     }
     
-    private static List<String> addAll(List<String> col1, List<String> col2){
+    private static List<Contact> addAll(List<Contact> col1, List<Contact> col2){
         col1.addAll(col2); 
         return col1;
     }
     
-    private List<String> regexList(List<String> contacts, String regular){ 
-        return contacts.stream().filter((con) -> !con.matches(regular)).collect(Collectors.toList());
+    private List<Contact> regexList(List<Contact> contacts, String regular){ 
+        return contacts.stream().filter((con) -> !con.getName().matches(regular)).collect(Collectors.toList());
     }
     
 }

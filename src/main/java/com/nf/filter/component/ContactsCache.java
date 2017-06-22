@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class ContactsCache implements ContactsDao {
 
-    private static volatile List<String> cache = new ArrayList();
+    private static volatile List<Contact> cache = new ArrayList();
     
     private static long timeToLive;
     
@@ -25,7 +25,7 @@ public class ContactsCache implements ContactsDao {
     }
       
     @Override
-    public List<String> getContacts(String regular) {
+    public List<Contact> getContacts(String regular) {
         if(checkTimeToLive()){
             return cache;
         }
@@ -36,7 +36,7 @@ public class ContactsCache implements ContactsDao {
         return timeToLive > System.currentTimeMillis() && !cache.isEmpty();
     }
     
-    private static List<String> getContactsAndCopyToCache(List<String> list){
+    private static List<Contact> getContactsAndCopyToCache(List<Contact> list){
         cache = list;
         setTimeToLive();
         return cache;

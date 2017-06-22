@@ -5,9 +5,11 @@
  */
 package com.nf.filter;
 
+import com.nf.filter.component.Contact;
 import com.nf.filter.component.ContactsCache;
 import com.nf.filter.component.ContactsData;
 import com.nf.filter.component.ContactsRegular;
+import com.nf.filter.util.JsonUtil;
 import java.util.List;
 import spark.Request;
 import spark.Response;
@@ -37,13 +39,13 @@ public class FilterServiceMain {
         });
         
         Spark.get("/hello", (Request req, Response res) -> {
-            List<String> result;
+            List<Contact> result;
             try{
                 long start = System.currentTimeMillis();
                 result = new ContactsRegular(new ContactsCache(new ContactsData())).getContacts(req.queryParams("nameFilter"));
                 long end = System.currentTimeMillis();
                 System.out.println("times = " + (end - start));// время выполнения
-                return result;
+                return JsonUtil.toJson(result);
             } catch (Exception e){
                 e.printStackTrace();
                 res.status(500);

@@ -33,14 +33,15 @@ public class ContactsRegularTest {
         
         ContactsCache cd = Mockito.mock(ContactsCache.class);
         
-        List<String> value = new ArrayList();
-        Stream.of("тест","1239454","fdghjkasd","впроварпова","").forEach(str->value.add(str));
+        List<Contact> value = new ArrayList();
+        Stream.of(new Contact(0, "тест"),new Contact(1, "1239454"),
+                  new Contact(2, "fdghjkasd"),new Contact(3, "впроварпова"), 
+                  new Contact(4, "")).forEach(contact->value.add(contact));
         
         Mockito.when(cd.getContacts(regular)).thenReturn(value);
         ContactsRegular instance = new ContactsRegular(cd);
-        List<String> result = instance.getContacts(regular);
-        List<String> expResult = value.stream().filter((str)->!str.matches(regular)).collect(Collectors.toList());
-        System.out.println("" + result.stream().reduce((s1,s2)-> s1 + "|" + s2));
+        List<Contact> result = instance.getContacts(regular);
+        List<Contact> expResult = value.stream().filter((str)->!str.getName().matches(regular)).collect(Collectors.toList());
         Assert.assertEquals(expResult, result);
         
     }

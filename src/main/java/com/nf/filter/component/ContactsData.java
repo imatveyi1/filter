@@ -24,16 +24,16 @@ public class ContactsData implements ContactsDao {
     private static final String LOGIN = System.getProperty("login");//"postgres";
     private static final String PASSWORD = System.getProperty("password");//"karolina123";
     
-    private static final String QUERY = "select name from contacts";
+    private static final String QUERY = "select id, name from contacts";
     
     @Override
-    public List<String> getContacts(String regular) {
-        List<String> result = new ArrayList();
+    public List<Contact> getContacts(String regular) {
+        List<Contact> result = new ArrayList();
         try {
             Connection con = DriverManager.getConnection(URL, LOGIN, PASSWORD);
             try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(QUERY)) {
                     while (rs.next()) {
-                        result.add(rs.getString(1));
+                        result.add(new Contact(Integer.parseInt(rs.getString(1)), rs.getString(2)));
                     }
                 }
         } catch (SQLException ex) {

@@ -34,12 +34,14 @@ public class ContactsCacheTest {
         String regular = "";
         ContactsData cd = Mockito.mock(ContactsData.class);
         
-        List<String> expResult = new ArrayList();
-        Stream.of("тест","1239454","fdghjkasd","впроварпова","").forEach(str->expResult.add(str));
+        List<Contact> expResult = new ArrayList();
+        Stream.of(new Contact(0, "тест"),new Contact(1, "1239454"),
+                  new Contact(2, "fdghjkasd"),new Contact(3, "впроварпова"), 
+                  new Contact(4, "")).forEach(contact->expResult.add(contact));
         
         Mockito.when(cd.getContacts(regular)).thenReturn(expResult);
         ContactsCache instance = new ContactsCache(cd);
-        List<String> result = instance.getContacts(regular);
+        List<Contact> result = instance.getContacts(regular);
         assertEquals(expResult, result);
         
     }
